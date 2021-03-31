@@ -1,3 +1,5 @@
+require("colors");
+
 const Task = require("./task");
 
 class Tasks {
@@ -18,9 +20,46 @@ class Tasks {
 		this._list = {};
 	}
 
+	deleteTask(id = "") {
+		if (this._list[id]) {
+			delete this._list[id];
+		}
+	}
+
+	loadTasksFromArray(tasks = []) {
+		tasks.forEach((task) => {
+			this._list[task.id] = task;
+		});
+	}
+
 	createTask(description = "") {
 		const task = new Task(description);
 		this._list[task.id] = task;
+	}
+
+	listAllTasks() {
+		console.log();
+		this.arrayList.forEach((task, index) => {
+			const idx = `${index + 1}`.green;
+			const {desc, finishedAt} = task;
+			const status = finishedAt === null ? "Pending".red : "Completed".green;
+			console.log(`  ${idx}. ${desc} :: ${status}`);
+		});
+	}
+
+	listTasks(completed = true) {
+		console.log();
+		const filteredTasks = this.arrayList.filter((task) =>
+			completed ? task.finishedAt !== null : task.finishedAt === null
+		);
+
+		filteredTasks.forEach((task, index) => {
+			const idx = `${index + 1}.`.green;
+			const {desc, finishedAt} = task;
+			const status = completed ? finishedAt.blue : "Pending".red;
+
+			console.log(`  ${idx} ${desc} :: ${status}`);
+		});
 	}
 }
 
