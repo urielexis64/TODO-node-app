@@ -6,6 +6,7 @@ const {
 	readInput,
 	removeTaskMenu,
 	confirmRemoveTask,
+	showChecklistTasks,
 } = require("./helpers/inquirer");
 const {saveDB, readDB} = require("./helpers/saveFile");
 const Tasks = require("./models/tasks");
@@ -35,6 +36,11 @@ const main = async () => {
 				break;
 			case "4":
 				tasks.listTasks(false);
+				break;
+			case "5":
+				const ids = await showChecklistTasks(tasks.arrayList);
+				tasks.editTaskStatus(ids);
+				console.log(ids);
 				break;
 			case "6":
 				const id = await removeTaskMenu(tasks.arrayList);
