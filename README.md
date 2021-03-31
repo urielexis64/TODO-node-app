@@ -12,4 +12,6 @@ Instala los paquetes mediante el comando `npm install`
 
 ## Demo
 
-<img src="https://github.com/urielexis64/TODO-node-app/blob/main/demo/demo.gif" width="100%"/>
+<p align="center">
+<img src="https://github.com/urielexis64/TODO-node-app/blob/main/demo/demo.gif" width="60%"/>
+</p>
