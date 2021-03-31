@@ -87,6 +87,11 @@ const removeTaskMenu = async (tasks = []) => {
 		};
 	});
 
+	choices.unshift({
+		value: "0",
+		name: "0.".green + " Cancel",
+	});
+
 	const question = [
 		{
 			type: "list",
@@ -100,9 +105,23 @@ const removeTaskMenu = async (tasks = []) => {
 	return id;
 };
 
+const confirmRemoveTask = async (message) => {
+	const question = [
+		{
+			type: "confirm",
+			name: "ok",
+			message,
+		},
+	];
+
+	const {ok} = await inquirer.prompt(question);
+	return ok;
+};
+
 module.exports = {
 	inquirerMenu,
 	pause,
 	readInput,
 	removeTaskMenu,
+	confirmRemoveTask,
 };

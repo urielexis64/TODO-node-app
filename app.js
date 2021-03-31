@@ -1,6 +1,12 @@
 require("colors");
 
-const {inquirerMenu, pause, readInput, removeTaskMenu} = require("./helpers/inquirer");
+const {
+	inquirerMenu,
+	pause,
+	readInput,
+	removeTaskMenu,
+	confirmRemoveTask,
+} = require("./helpers/inquirer");
 const {saveDB, readDB} = require("./helpers/saveFile");
 const Tasks = require("./models/tasks");
 
@@ -32,7 +38,13 @@ const main = async () => {
 				break;
 			case "6":
 				const id = await removeTaskMenu(tasks.arrayList);
-				console.log(id);
+				if (id !== "0") {
+					const ok = await confirmRemoveTask("Are you sure?");
+					if (ok) {
+						tasks.deleteTask(id);
+						console.log("Task deleted correctly!".green);
+					}
+				}
 				break;
 			default:
 		}
