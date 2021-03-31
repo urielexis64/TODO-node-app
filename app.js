@@ -1,15 +1,20 @@
 require("colors");
 
-const {inquirerMenu, pause, readInput} = require("./helpers/inquirer");
-const Task = require("./models/task");
+const {inquirerMenu, pause, readInput, removeTaskMenu} = require("./helpers/inquirer");
+const {saveDB, readDB} = require("./helpers/saveFile");
 const Tasks = require("./models/tasks");
 
 const main = async () => {
-	console.clear();
-
 	let opt = "";
 	const tasks = new Tasks();
+	const dbTasks = readDB();
+
+	if (dbTasks) {
+		tasks.loadTasksFromArray(dbTasks);
+	}
+
 	do {
+		console.clear();
 		opt = await inquirerMenu();
 		switch (opt) {
 			case "1":
@@ -17,10 +22,22 @@ const main = async () => {
 				tasks.createTask(desc);
 				break;
 			case "2":
-				console.log(tasks);
-			default:
+				tasks.listAllTasks();
 				break;
+			case "3":
+				tasks.listTasks(true);
+				break;
+			case "4":
+				tasks.listTasks(false);
+				break;
+			case "6":
+				const id = await removeTaskMenu(tasks.arrayList);
+				console.log(id);
+				break;
+			default:
 		}
+
+		saveDB(tasks.arrayList);
 
 		await pause();
 	} while (opt !== "0");
