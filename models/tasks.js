@@ -39,12 +39,14 @@ class Tasks {
 
 	listAllTasks() {
 		console.log();
-		this.arrayList.forEach((task, index) => {
-			const idx = `${index + 1}`.green;
-			const {desc, finishedAt} = task;
-			const status = finishedAt === null ? "Pending".red : "Completed".green;
-			console.log(`  ${idx}. ${desc} :: ${status}`);
-		});
+		if (this.arrayList.length === 0) console.log(`There's no tasks.`.black.bgGreen);
+		else
+			this.arrayList.forEach((task, index) => {
+				const idx = `${index + 1}`.green;
+				const {desc, finishedAt} = task;
+				const status = finishedAt === null ? "Pending".red : "Completed".green;
+				console.log(`  ${idx}. ${desc} :: ${status}`);
+			});
 	}
 
 	listTasks(completed = true) {
