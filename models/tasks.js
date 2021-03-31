@@ -63,6 +63,17 @@ class Tasks {
 			console.log(`  ${idx} ${desc} :: ${status}`);
 		});
 	}
+
+	editTaskStatus(ids = []) {
+		ids.forEach((id) => {
+			this._list[id].finishedAt = new Date().toISOString();
+		});
+		this.arrayList.forEach((task) => {
+			if (!ids.includes(task.id)) {
+				this._list[task.id].finishedAt = null;
+			}
+		});
+	}
 }
 
 module.exports = Tasks;
