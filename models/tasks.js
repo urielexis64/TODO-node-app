@@ -39,6 +39,7 @@ class Tasks {
 
 	listAllTasks() {
 		console.log();
+
 		if (this.arrayList.length === 0) console.log(`There's no tasks.`.black.bgGreen);
 		else
 			this.arrayList.forEach((task, index) => {
@@ -51,9 +52,20 @@ class Tasks {
 
 	listTasks(completed = true) {
 		console.log();
+
+		if (this.arrayList.length === 0) {
+			console.log(`There's no tasks.`.black.bgGreen);
+			return;
+		}
+
 		const filteredTasks = this.arrayList.filter((task) =>
 			completed ? task.finishedAt !== null : task.finishedAt === null
 		);
+
+		if (filteredTasks.length === 0) {
+			console.log(`There's no ${completed ? "completed" : "pending"} tasks.`.black.bgGreen);
+			return;
+		}
 
 		filteredTasks.forEach((task, index) => {
 			const idx = `${index + 1}.`.green;
