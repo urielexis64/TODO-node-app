@@ -1,6 +1,5 @@
-const {green} = require("colors");
-const inquirer = require("inquirer");
 require("colors");
+const inquirer = require("inquirer");
 
 const menuOptions = [
 	{
@@ -41,7 +40,6 @@ const menuOptions = [
 ];
 
 const inquirerMenu = async () => {
-	console.clear();
 	console.log("=====================".green);
 	console.log("   Select an option".white);
 	console.log("=====================\n".green);
@@ -80,8 +78,31 @@ const readInput = async (message) => {
 	return outputValue;
 };
 
+const removeTaskMenu = async (tasks = []) => {
+	const choices = tasks.map((task, index) => {
+		const idx = `${index + 1}.`.green;
+		return {
+			value: task.id,
+			name: `${idx} ${task.desc}`,
+		};
+	});
+
+	const question = [
+		{
+			type: "list",
+			name: "id",
+			message: "What task do you want to remove?",
+			choices,
+		},
+	];
+
+	const {id} = await inquirer.prompt(question);
+	return id;
+};
+
 module.exports = {
 	inquirerMenu,
 	pause,
 	readInput,
+	removeTaskMenu,
 };
